@@ -1,13 +1,15 @@
 const nodemailer = require("nodemailer");
 
 module.exports = async (email, otp) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.OTP_EMAIL,
-      pass: process.env.OTP_EMAIL_PASS,
-    },
-  });
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // TLS
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
   await transporter.sendMail({
     from: `"Crowd" <${process.env.OTP_EMAIL}>`,
