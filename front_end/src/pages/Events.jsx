@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import API from "../api";
-import defaultImage from "../assets/default-event.jpg";
+const defaultImage = "/default-event.jpg";
 
 /* ── outside component to prevent remount ── */
 function SearchBar({ value, onChange }) {

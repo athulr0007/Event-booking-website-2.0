@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import API from "../api";
-import defaultImage from "../assets/default-event.jpg";
+const defaultImage = "/default-event.jpg";
 
 /* ── Stat pill ── */
 function Pill({ icon, text, green }) {

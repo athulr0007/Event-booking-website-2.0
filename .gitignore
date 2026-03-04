@@ -7,3 +7,6 @@
 *.png
 *.webp
 *.svg
+
+!front_end/public/*.jpg
+!front_end/public/*.png

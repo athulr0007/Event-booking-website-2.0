@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import API from "../api";
-import defaultImage from "../assets/default-event.jpg";
+const defaultImage = "/default-event.jpg";
 
 /* ── Cancel modal ── */
 function CancelModal({ booking, onConfirm, onClose }) {
