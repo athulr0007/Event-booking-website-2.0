@@ -26,6 +26,8 @@ module.exports = async (email, otp) => {
         }
   );
 
+  await transporter.verify();
+
   await transporter.sendMail({
     from: process.env.NODE_ENV === "production"
       ? `"Crowd" <${process.env.BREVO_SENDER}>`
