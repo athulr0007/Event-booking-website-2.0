@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-const bgImage = "/landing.jpg";
+const bgImage = "/landing.webp";
 import API from "../api";
 import EventTicker from "./EventTicker";
 
