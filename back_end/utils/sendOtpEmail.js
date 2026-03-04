@@ -1,18 +1,35 @@
 const nodemailer = require("nodemailer");
 
 module.exports = async (email, otp) => {
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // TLS
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+
+  const transporter = nodemailer.createTransport(
+    process.env.NODE_ENV === "production"
+      ? {
+          // Brevo — used on Render
+          host: "smtp-relay.brevo.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: process.env.BREVO_USER,
+            pass: process.env.BREVO_PASS,
+          },
+        }
+      : {
+          // Gmail — used locally
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+          },
+        }
+  );
 
   await transporter.sendMail({
-    from: `"Crowd" <${process.env.OTP_EMAIL}>`,
+    from: process.env.NODE_ENV === "production"
+      ? `"Crowd" <${process.env.BREVO_SENDER}>`
+      : `"Crowd" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: "Your Crowd Login Code",
     html: `
@@ -60,8 +77,6 @@ const transporter = nodemailer.createTransport({
           <!-- Header -->
           <tr>
             <td align="center" style="padding: 40px 48px 32px;">
-
-              <!-- Logo -->
               <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="
@@ -85,7 +100,6 @@ const transporter = nodemailer.createTransport({
                   ">CROWD</td>
                 </tr>
               </table>
-
             </td>
           </tr>
 
@@ -100,7 +114,6 @@ const transporter = nodemailer.createTransport({
           <tr>
             <td style="padding: 40px 48px 32px;">
 
-              <!-- Badge -->
               <div style="margin-bottom: 24px;">
                 <span style="
                   display: inline-block;
@@ -116,7 +129,6 @@ const transporter = nodemailer.createTransport({
                 ">Security Code</span>
               </div>
 
-              <!-- Heading -->
               <h1 style="
                 margin: 0 0 12px;
                 font-size: 28px;
@@ -251,9 +263,7 @@ const transporter = nodemailer.createTransport({
           </tr>
 
         </table>
-        <!-- /Card -->
 
-        <!-- Below card note -->
         <p style="
           margin: 24px 0 0;
           font-size: 12px;
