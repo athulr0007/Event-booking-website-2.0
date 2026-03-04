@@ -7,11 +7,15 @@ module.exports = async (email, otp) => {
       ? {
           // Brevo — used on Render
           host: "smtp-relay.brevo.com",
-          port: 587,
-          secure: false,
-          auth: {
-            user: process.env.BREVO_USER,
-            pass: process.env.BREVO_PASS,
+  port: 587,
+  secure: false,
+  family: 4,
+  connectionTimeout: 20000,
+  greetingTimeout: 15000,
+  socketTimeout: 20000,
+  auth: {
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
           },
         }
       : {
@@ -27,6 +31,7 @@ module.exports = async (email, otp) => {
   );
 
   await transporter.verify();
+  console.log("SMTP connected");
 
   await transporter.sendMail({
     from: process.env.NODE_ENV === "production"
