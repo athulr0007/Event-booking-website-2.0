@@ -9,8 +9,9 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "https://crowd-seven.vercel.app",
     process.env.CLIENT_URL
-  ],
+  ].filter(Boolean),
   credentials: true,
 }));
 
